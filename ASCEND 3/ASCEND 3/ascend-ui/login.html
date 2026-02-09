@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - ASCEND</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <div class="auth-page">
+        <div class="bg-glow"></div>
+
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i data-lucide="zap" width="32" height="32"></i>
+                </div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to continue your mentorship journey</p>
+            </div>
+
+            <form class="auth-form" id="authForm">
+                <div class="input-group">
+                    <label class="input-label">Select your role</label>
+                    <div class="role-selector">
+                        <div class="role-option selected" data-role="student">
+                            <div class="role-option-label">Student</div>
+                            <div class="role-option-desc">Learning</div>
+                        </div>
+                        <div class="role-option" data-role="mentor">
+                            <div class="role-option-label">Mentor</div>
+                            <div class="role-option-desc">Guiding</div>
+                        </div>
+                        <div class="role-option" data-role="admin">
+                            <div class="role-option-label">Admin</div>
+                            <div class="role-option-desc">Managing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="email">Email address</label>
+                    <div class="input-icon">
+                        <span class="icon"><i data-lucide="mail" width="18" height="18"></i></span>
+                        <input type="email" id="email" class="input" placeholder="you@university.edu" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="password">Password</label>
+                    <div class="input-icon">
+                        <span class="icon"><i data-lucide="lock" width="18" height="18"></i></span>
+                        <input type="password" id="password" class="input" placeholder="••••••••" required>
+                    </div>
+                    <div style="text-align: right; margin-top: 12px;">
+                        <a href="forgot-password.html"
+                            style="font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Forgot
+                            Password?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    Sign In →
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account? <a href="register.html">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Role selection
+        document.querySelectorAll('.role-option').forEach(option => {
+            option.addEventListener('click', function () {
+                document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('authForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const selectedRole = document.querySelector('.role-option.selected').dataset.role;
+            const email = document.getElementById('email').value;
+
+            // Store user info (in real app, this would be authenticated)
+            localStorage.setItem('userRole', selectedRole);
+            localStorage.setItem('userEmail', email);
+
+            // Redirect based on role
+            if (selectedRole === 'admin') {
+                window.location.href = 'admin-dashboard.html';
+            } else if (selectedRole === 'mentor') {
+                window.location.href = 'alumni-dashboard.html';
+            } else {
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+
+</html>
